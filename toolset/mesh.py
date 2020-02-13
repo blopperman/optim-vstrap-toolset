@@ -112,7 +112,14 @@ class Mesh:
                     cell_id = int(row[0])
                     control = (float(row[1]), float(row[2]), float(row[3]))
 
-                    self.cells[cell_id].value = control
+                    self.cells[cell_id].value = np.array(control)
+
+    def write_control(self, file_name):
+        with open(file_name, 'w+') as file:
+            file.write("#node_id,#x,#y,#z\n")
+
+            for id, node in self.nodes.items():
+                file.write(str(id) + ',' + str(node.value[0]) + ',' + str(node.value[1]) + ',' + str(node.value[2]) + '\n')
 
     def __check_mesh_file(self, root):
         mesh_node = root.find('mesh')
