@@ -34,6 +34,21 @@ class MeshTest(unittest.TestCase):
 
         self.assertTrue(not execption)
 
+    def test_interpolate_cell2node(self):
+        mesh = Mesh()
+        execption = False
+
+        try:
+            mesh.read_from_xml('test_data/cube.xml')
+            mesh.read_control('test_data/control.csv')
+        except Exception as e:
+            print(e)
+            execption = True
+
+        self.assertTrue(not execption)
+
+        mesh.interpolate_cell2node()
+
 class CellTest(unittest.TestCase):
     def test_calc_volume(self):
         cell = Cell()
