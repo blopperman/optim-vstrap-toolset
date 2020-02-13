@@ -151,6 +151,17 @@ class Mesh:
             for id, node in self.nodes.items():
                 file.write(str(id) + ',' + str(node.value[0]) + ',' + str(node.value[1]) + ',' + str(node.value[2]) + '\n')
 
+    def write_control_xml(self, file_name):
+        with open(file_name, 'w+') as file:
+            file.write("<field name=\"interpolated_control_field\" type=\"control_field\" dimensions=\"3\" number_of_elements=\"" + str(len(self.nodes)) + "\">\n")
+
+            for id, node in self.nodes.items():
+                file.write("<value node_id=\"" + str(id) + "\">")
+                file.write(str(node.value[0]) + "," + str(node.value[1]) + "," + str(node.value[2]))
+                file.write("</value>\n")
+
+            file.write("</field>")
+
     def __check_mesh_file(self, root):
         mesh_node = root.find('mesh')
         mesh_type = mesh_node.get('mesh_type')

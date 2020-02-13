@@ -19,7 +19,7 @@ if __name__ == '__main__':
         mesh.read_mesh_xml(args.mesh)
         mesh.read_control_xml(args.control)
         mesh.interpolate_cell2node()
-        mesh.write_control_csv(args.new_control)
+        mesh.write_control_xml(args.new_control)
     except Exception as e:
         print(e)
         exit()
