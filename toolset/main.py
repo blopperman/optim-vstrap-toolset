@@ -3,24 +3,7 @@
 import argparse
 import xml.etree.ElementTree as ET
 
-class Node:
-    def __init__(self):
-        self.id = 0
-        self.x = 0.0
-        self.y = 0.0
-        self.z = 0.0
-        self.value = (0, 0, 0)
-
-class Cell:
-    def __init__(self, id, nodes_ids = []):
-        self.id = id
-        self.nodes_ids = nodes_ids
-        self.value = (0, 0, 0)
-
-class Mesh:
-    def __init__(self):
-        self.cells = []
-        self.nodes = {}
+from mesh import*
 
 def convert_mesh_file(file_name):
     mesh = Mesh()
