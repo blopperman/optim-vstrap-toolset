@@ -43,6 +43,19 @@ class MeshTest(unittest.TestCase):
 
         self.assertTrue(not execption)
 
+    def test_read_control_xml(self):
+        mesh = Mesh()
+        execption = False
+
+        try:
+            mesh.read_mesh_xml('test_data/box_vol_regular_refined.xml')
+            mesh.read_control_xml('test_data/Control_field.xml')
+        except Exception as e:
+            print(e)
+            execption = True
+
+        self.assertTrue(not execption)
+
     def test_interpolate_cell2node(self):
         mesh = Mesh()
         execption = False

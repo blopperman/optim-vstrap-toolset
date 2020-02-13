@@ -129,6 +129,21 @@ class Mesh:
 
                     self.cells[cell_id].value = np.array(control)
 
+    def read_control_xml(self, file_name):
+        tree = ET.parse(file_name)
+        root = tree.getroot()
+
+        values = root.findall('value')
+
+        for value in values:
+            cell_id = int(value.get('cell_id'))
+            control = []
+
+            for str in value.text.split(','):
+                control.append(float(str))
+
+            self.cells[cell_id].value = np.array(control)
+
     def write_control_csv(self, file_name):
         with open(file_name, 'w+') as file:
             file.write("#node_id,#x,#y,#z\n")
