@@ -8,7 +8,7 @@ from toolset.mesh import Cell
 from toolset.mesh import Node
 
 class MeshTest(unittest.TestCase):
-    def test_read_from_xml(self):
+    def test_read_mesh_xml(self):
         mesh = Mesh()
         execption = False
 
@@ -19,9 +19,18 @@ class MeshTest(unittest.TestCase):
             execption = True
 
         self.assertTrue(not execption)
-        self.assertTrue(1.0 - mesh.volume < 0.001)
+        self.assertAlmostEqual(1.0, mesh.volume)
 
-    def test_read_control(self):
+        try:
+            mesh.read_mesh_xml('test_data/box_vol_regular_refined.xml')
+        except Exception as e:
+            print(e)
+            execption = True
+
+        self.assertTrue(not execption)
+        self.assertAlmostEqual(1.0, mesh.volume)
+
+    def test_read_control_csv(self):
         mesh = Mesh()
         execption = False
 

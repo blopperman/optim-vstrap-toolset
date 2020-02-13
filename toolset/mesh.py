@@ -35,6 +35,8 @@ class Cell:
             pass
         elif self.type == 4:
             return self._calc_volume_tetrahedron(nodes)
+        elif self.type == 5:
+            return self._calc_volume_hexahedron(nodes)
         else:
             raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation for type {}.".format(self.type))
 
@@ -49,6 +51,19 @@ class Cell:
         diff3 = point3 - point4
 
         return abs(diff1.dot(np.cross(diff2, diff3)))/6.0
+
+    def _calc_volume_hexahedron(self, nodes):
+        point1 = nodes[0].get_position()
+        point2 = nodes[1].get_position()
+        point3 = nodes[2].get_position()
+        point4 = nodes[3].get_position()
+        point5 = nodes[4].get_position()
+
+        diff1 = np.linalg.norm(point2 - point1)
+        diff2 = np.linalg.norm(point4 - point1)
+        diff3 = np.linalg.norm(point5 - point1)
+
+        return diff1*diff2*diff3
 
 class Mesh:
     def __init__(self):
@@ -133,9 +148,9 @@ class Mesh:
             node = Node()
 
             node.id = int(element.get('node_number'))
-            node.x_coord = float(element.get('x_coord'))
-            node.y_coord = float(element.get('y_coord'))
-            node.z_coord = float(element.get('z_coord'))
+            node.x_coord = float(element.get('x_coord'))/1000.0
+            node.y_coord = float(element.get('y_coord'))/1000.0
+            node.z_coord = float(element.get('z_coord'))/1000.0
 
             if node.id not in self.nodes:
                 self.nodes[node.id] = node
