@@ -19,10 +19,10 @@ class Cell:
         for node in nodes:
             self.nodes_ids.append(node.id)
 
-        self.__calc_volume(nodes)
+        self.volume = self.calc_volume(nodes)
 
-    def __calc_volume(self, nodes):
-        pass
+    def calc_volume(self, nodes):
+        return 0.0
 
 class Mesh:
     def __init__(self):
