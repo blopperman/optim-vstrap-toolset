@@ -10,7 +10,7 @@ class Node:
         self.x_coord = coord[0]
         self.y_coord = coord[1]
         self.z_coord = coord[2]
-        self.value = (0, 0, 0)
+        self.value = np.zeros(3)
 
     def get_position(self):
         return np.asarray([self.x_coord, self.y_coord, self.z_coord])
@@ -19,7 +19,7 @@ class Cell:
     def __init__(self):
         self.id = 0
         self.nodes_ids = []
-        self.value = (0, 0, 0)
+        self.value = np.zeros(3)
         self.volume = 0.0
         self.type = 0
 
@@ -77,6 +77,28 @@ class Mesh:
         self.__create_nodes(root)
         self.__create_cells(root)
         self.__calc_volume()
+
+    def interpolate_cell2node(self):
+        node2cell = {}
+
+        for id, node in self.nodes.items():
+            node2cell[id] = []
+
+        for id, cell in self.cells.items():
+            for node_id in cell.nodes_ids:
+                node2cell[node_id].append(id)
+
+        for node_id, cell_ids in node2cell.items():
+            volume = 0.0
+
+            for cell_id in cell_ids:
+                cell = self.cells[cell_id]
+
+                if cell.volume != None:
+                    self.nodes[node_id].value += cell.value * cell.volume
+                    volume += cell.volume
+
+            self.nodes[node_id].value /= volume
 
     def read_control(self, file_name):
         with open(file_name, newline='') as csvfile:
