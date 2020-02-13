@@ -13,8 +13,9 @@ class MeshTest(unittest.TestCase):
         execption = False
 
         try:
-            mesh.read_from_xml('test_data/box_vol_regular_refined.xml')
-        except:
+            mesh.read_from_xml('test_data/cube.xml')
+        except Exception as e:
+            print(e)
             execption = True
 
         self.assertTrue(not execption)
@@ -28,6 +29,7 @@ class CellTest(unittest.TestCase):
         node4 = Node(4, (0.0, 0.0, 1.0))
         nodes = (node1, node2, node3, node4)
 
+        cell.type = 4
         volume = cell.calc_volume(nodes)
 
         self.assertEqual(1.0/6.0, volume)

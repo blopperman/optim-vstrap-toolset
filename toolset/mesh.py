@@ -20,6 +20,7 @@ class Cell:
         self.nodes_ids = []
         self.value = (0, 0, 0)
         self.volume = 0.0
+        self.type = 0
 
     def set_nodes(self, nodes):
         for node in nodes:
@@ -28,10 +29,13 @@ class Cell:
         self.volume = self.calc_volume(nodes)
 
     def calc_volume(self, nodes):
-        if len(nodes) == 4:
+        if self.type == 2:
+            # surface triangle
+            pass
+        elif self.type == 4:
             return self._calc_volume_tetrahedron(nodes)
         else:
-            raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation.")
+            raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation for type {}.".format(self.type))
 
     def _calc_volume_tetrahedron(self, nodes):
         point1 = nodes[0].get_position()
@@ -101,6 +105,7 @@ class Mesh:
                 nodes.append(self.nodes[id])
 
             cell.id = int(element.get('elem_number'))
+            cell.type = int(element.get('elm_type'))
             cell.set_nodes(nodes)
 
     def __get_node_ids(self, text):
