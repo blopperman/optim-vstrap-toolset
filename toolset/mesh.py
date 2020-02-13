@@ -30,8 +30,8 @@ class Cell:
     def calc_volume(self, nodes):
         if len(nodes) == 4:
             return self._calc_volume_tetrahedron(nodes)
-
-        return 0.0
+        else:
+            raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation.")
 
     def _calc_volume_tetrahedron(self, nodes):
         point1 = nodes[0].get_position()
