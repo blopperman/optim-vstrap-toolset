@@ -21,6 +21,19 @@ class MeshTest(unittest.TestCase):
         self.assertTrue(not execption)
         self.assertTrue(1.0 - mesh.volume < 0.001)
 
+    def test_read_control(self):
+        mesh = Mesh()
+        execption = False
+
+        try:
+            mesh.read_from_xml('test_data/cube.xml')
+            mesh.read_control('test_data/control.csv')
+        except Exception as e:
+            print(e)
+            execption = True
+
+        self.assertTrue(not execption)
+
 class CellTest(unittest.TestCase):
     def test_calc_volume(self):
         cell = Cell()

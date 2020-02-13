@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import csv
 import numpy.matlib
 import numpy as np
 import math
@@ -76,6 +77,20 @@ class Mesh:
         self.__create_nodes(root)
         self.__create_cells(root)
         self.__calc_volume()
+
+    def read_control(self, file_name):
+        with open(file_name, newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            first_line = True
+
+            for row in reader:
+                if first_line:
+                    first_line = False
+                else:
+                    cell_id = int(row[0])
+                    control = (float(row[1]), float(row[2]), float(row[3]))
+
+                    self.cells[cell_id].value = control
 
     def __check_mesh_file(self, root):
         mesh_node = root.find('mesh')
