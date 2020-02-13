@@ -1,12 +1,18 @@
 import xml.etree.ElementTree as ET
+import numpy.matlib
+import numpy as np
+import math
 
 class Node:
-    def __init__(self):
-        self.id = 0
-        self.x_coord = 0.0
-        self.y_coord = 0.0
-        self.z_coord = 0.0
+    def __init__(self, id = 0, coord = (0.0, 0.0, 0.0)):
+        self.id = id
+        self.x_coord = coord[0]
+        self.y_coord = coord[1]
+        self.z_coord = coord[2]
         self.value = (0, 0, 0)
+
+    def get_position(self):
+        return np.asarray([self.x_coord, self.y_coord, self.z_coord])
 
 class Cell:
     def __init__(self):
@@ -22,7 +28,22 @@ class Cell:
         self.volume = self.calc_volume(nodes)
 
     def calc_volume(self, nodes):
+        if len(nodes) == 4:
+            return self._calc_volume_tetrahedron(nodes)
+
         return 0.0
+
+    def _calc_volume_tetrahedron(self, nodes):
+        point1 = nodes[0].get_position()
+        point2 = nodes[1].get_position()
+        point3 = nodes[2].get_position()
+        point4 = nodes[3].get_position()
+
+        diff1 = point1 - point4
+        diff2 = point2 - point4
+        diff3 = point3 - point4
+
+        return abs(diff1.dot(np.cross(diff2, diff3)))/6.0
 
 class Mesh:
     def __init__(self):
