@@ -12,14 +12,29 @@ if __name__ == '__main__':
     parser.add_argument('mesh', type=str, help='path to the mesh file')
     parser.add_argument('control', type=str, help='path to the control file')
     parser.add_argument('new_control', type=str, help='path to the created control file')
+    parser.add_argument('-i', '--input', type=str, help='input format', default='xml')
+    parser.add_argument('-o', '--output', type=str, help='output format', default='xml')
 
     args = parser.parse_args()
 
     try:
-        mesh.read_mesh_xml(args.mesh)
-        mesh.read_control_xml(args.control)
+        if args.input == "xml":
+            mesh.read_mesh_xml(args.mesh)
+            mesh.read_control_xml(args.control)
+        elif args.input == "csv":
+            mesh.read_mesh_csv(args.mesh)
+            mesh.read_control_csv(args.control)
+        else:
+            raise Exception("Undefined input format", args.input)
+
         mesh.interpolate_cell2node()
-        mesh.write_control_xml(args.new_control)
+
+        if args.output == "xml":
+            mesh.write_control_xml(args.new_control)
+        elif args.output == "csv":
+            mesh.write_control_csv(args.new_control)
+        else:
+            raise Exception("Undefined output format", args.output)
     except Exception as e:
         print(e)
         exit()
