@@ -19,6 +19,7 @@ class MeshTest(unittest.TestCase):
             execption = True
 
         self.assertTrue(not execption)
+        self.assertTrue(1.0 - mesh.volume < 0.001)
 
 class CellTest(unittest.TestCase):
     def test_calc_volume(self):

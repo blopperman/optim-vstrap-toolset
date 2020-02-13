@@ -51,8 +51,9 @@ class Cell:
 
 class Mesh:
     def __init__(self):
-        self.cells = []
+        self.cells = {}
         self.nodes = {}
+        self.volume = 0.0
 
     def __str__(self):
         str = ""
@@ -62,8 +63,9 @@ class Mesh:
         return str
 
     def clear(self):
-        self.cells = []
+        self.cells = {}
         self.nodes = {}
+        self.volume = 0.0
 
     def read_from_xml(self, file_name):
         tree = ET.parse(file_name)
@@ -73,6 +75,7 @@ class Mesh:
         self.__check_mesh_file(root)
         self.__create_nodes(root)
         self.__create_cells(root)
+        self.__calc_volume()
 
     def __check_mesh_file(self, root):
         mesh_node = root.find('mesh')
@@ -108,6 +111,11 @@ class Mesh:
             cell.type = int(element.get('elm_type'))
             cell.set_nodes(nodes)
 
+            if cell.id not in self.cells:
+                self.cells[cell.id] = cell
+            else:
+                raise Exception(__name__, self.__create_nodes.__name__, 'Cell with id {} allready in list.'.format(cell.id))
+
     def __get_node_ids(self, text):
         node_ids = []
 
@@ -115,3 +123,10 @@ class Mesh:
             node_ids.append(int(str))
 
         return node_ids
+
+    def __calc_volume(self):
+        self.volume = 0.0
+
+        for id, cell in self.cells.items():
+            if cell.volume != None:
+                self.volume += cell.volume
