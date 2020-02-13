@@ -68,7 +68,7 @@ class Mesh:
         self.nodes = {}
         self.volume = 0.0
 
-    def read_from_xml(self, file_name):
+    def read_mesh_xml(self, file_name):
         tree = ET.parse(file_name)
         root = tree.getroot()
 
@@ -100,7 +100,7 @@ class Mesh:
 
             self.nodes[node_id].value /= volume
 
-    def read_control(self, file_name):
+    def read_control_csv(self, file_name):
         with open(file_name, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             first_line = True
@@ -114,7 +114,7 @@ class Mesh:
 
                     self.cells[cell_id].value = np.array(control)
 
-    def write_control(self, file_name):
+    def write_control_csv(self, file_name):
         with open(file_name, 'w+') as file:
             file.write("#node_id,#x,#y,#z\n")
 

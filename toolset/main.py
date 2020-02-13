@@ -16,9 +16,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     try:
-        mesh.read_from_xml(args.mesh)
-        mesh.read_control(args.control)
-        mesh.write_control(args.new_control)
+        mesh.read_mesh_xml(args.mesh)
+        mesh.read_control_csv(args.control)
+        mesh.write_control_csv(args.new_control)
     except Exception as e:
         print(e)
         exit()

@@ -13,7 +13,7 @@ class MeshTest(unittest.TestCase):
         execption = False
 
         try:
-            mesh.read_from_xml('test_data/cube.xml')
+            mesh.read_mesh_xml('test_data/cube.xml')
         except Exception as e:
             print(e)
             execption = True
@@ -26,8 +26,8 @@ class MeshTest(unittest.TestCase):
         execption = False
 
         try:
-            mesh.read_from_xml('test_data/cube.xml')
-            mesh.read_control('test_data/control.csv')
+            mesh.read_mesh_xml('test_data/cube.xml')
+            mesh.read_control_csv('test_data/control.csv')
         except Exception as e:
             print(e)
             execption = True
@@ -39,8 +39,8 @@ class MeshTest(unittest.TestCase):
         execption = False
 
         try:
-            mesh.read_from_xml('test_data/cube.xml')
-            mesh.read_control('test_data/control.csv')
+            mesh.read_mesh_xml('test_data/cube.xml')
+            mesh.read_control_csv('test_data/control.csv')
         except Exception as e:
             print(e)
             execption = True
