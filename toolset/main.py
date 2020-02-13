@@ -18,6 +18,7 @@ if __name__ == '__main__':
     try:
         mesh.read_mesh_xml(args.mesh)
         mesh.read_control_xml(args.control)
+        mesh.interpolate_cell2node()
         mesh.write_control_csv(args.new_control)
     except Exception as e:
         print(e)
