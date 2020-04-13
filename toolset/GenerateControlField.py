@@ -19,6 +19,10 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     print('[Interpolate cell2Node]: Successfully parsed arguments')
+
+    #mesh.read_mesh_xml(args.mesh)
+    #mesh.write_barycenters_xml(args.new_control)
+    #exit()
     
     
     try:

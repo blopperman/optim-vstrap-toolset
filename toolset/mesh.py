@@ -22,12 +22,14 @@ class Cell:
         self.value = np.zeros(3)
         self.volume = 0.0
         self.type = 0
+        self.barycenter = np.zeros(3)
 
     def set_nodes(self, nodes):
         for node in nodes:
             self.nodes_ids.append(node.id)
 
         self.volume = self.calc_volume(nodes)
+        self.barycenter = self.calc_barycenter(nodes)
 
     def calc_volume(self, nodes):
         if self.type == 2:
@@ -37,6 +39,18 @@ class Cell:
             return self._calc_volume_tetrahedron(nodes)
         elif self.type == 5:
             return self._calc_volume_hexahedron(nodes)
+        else:
+            raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation for type {}.".format(self.type))
+
+    def calc_barycenter(self, nodes):
+        if self.type == 2:
+            # barycenter triangle
+            pass
+        elif self.type == 4:
+            # barycenter tetrahedron
+            pass
+        elif self.type == 5:
+            return self._calc_barycenter_hexahedron(nodes)
         else:
             raise Exception(__name__, self.calc_volume.__name__, "Undefined volume calculation for type {}.".format(self.type))
 
@@ -64,6 +78,22 @@ class Cell:
         diff3 = np.linalg.norm(point5 - point1)
 
         return diff1*diff2*diff3
+
+    def _calc_barycenter_hexahedron(self, nodes):
+        #print(nodes)
+        point1 = nodes[0].get_position()
+        point2 = nodes[1].get_position()
+        point3 = nodes[2].get_position()
+        point4 = nodes[3].get_position()
+        point5 = nodes[4].get_position()
+        point6 = nodes[5].get_position()
+        point7 = nodes[6].get_position()
+        point8 = nodes[7].get_position()
+
+        barycenter = 1/8*(point1+point2+point3+point4+point5+point6+point7+point8)
+        #print(barycenter)
+
+        return barycenter
 
 class Mesh:
     def __init__(self):
@@ -161,6 +191,21 @@ class Mesh:
                 file.write("</value>\n")
 
             file.write("</field>")
+
+    def write_barycenters_xml(self, file_name):
+        print("Generating barycenters")
+        with open(file_name, 'w+') as file:
+            file.write("<mesh_barycenters name=\"box_hexahedrons\" type=\" \" dimensions=\"3\" number_of_elements=\"" + str(len(self.cells)) + "\">\n")
+
+            for id, cell in self.cells.items():
+                file.write("<barycenter cell_id=\"" + str(id) + "\">")
+                file.write(str(cell.barycenter[0]) + "," + str(cell.barycenter[1]) + "," + str(cell.barycenter[2]))
+                file.write("</barycenter>\n")
+
+            file.write("</mesh_barycenters>")
+            print("Done generating barycenters")
+
+
 
     def __check_mesh_file(self, root):
         mesh_node = root.find('mesh')
