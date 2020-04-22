@@ -195,6 +195,7 @@ class Mesh:
     def write_barycenters_xml(self, file_name):
         print("Generating barycenters")
         with open(file_name, 'w+') as file:
+            file.write("<root>\n") 
             file.write("<mesh_barycenters name=\"box_hexahedrons\" type=\" \" dimensions=\"3\" number_of_elements=\"" + str(len(self.cells)) + "\">\n")
 
             for id, cell in self.cells.items():
@@ -202,7 +203,8 @@ class Mesh:
                 file.write(str(cell.barycenter[0]) + "," + str(cell.barycenter[1]) + "," + str(cell.barycenter[2]))
                 file.write("</barycenter>\n")
 
-            file.write("</mesh_barycenters>")
+            file.write("</mesh_barycenters>\n")
+            file.write("</root>")
             print("Done generating barycenters")
 
 
