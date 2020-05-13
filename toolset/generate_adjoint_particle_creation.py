@@ -20,9 +20,9 @@ v_x = 0.0;
 v_y = 0.0;
 v_z = 0.0;
 
-v_s_x = 70;
-v_s_y = 70;
-v_s_z = 70;
+v_s_x = 5e+2;
+v_s_y = 5e+2;
+v_s_z = 5e+2;
 
 
 file.write("<parameraters>\n")
