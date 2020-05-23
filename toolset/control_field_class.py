@@ -77,6 +77,9 @@ class Control_field:
 		fig = plt.figure()
 		ax = fig.add_subplot(111, projection='3d')
 		ax.set(xlim=(-0.5, 0.5), ylim=(0.5, -0.5),zlim=(-0.5,0.5))
+		ax.set_xlabel('x axis')
+		ax.set_ylabel('y axis')
+		ax.set_zlabel('z axis')			
 
 		for n in range(1,len(nodesMesh)):
 			a = Arrow3D([nodesMesh[n-1][0], endPoints[n-1][0]], [nodesMesh[n-1][1], endPoints[n-1][1]], [nodesMesh[n-1][2], endPoints[n-1][2]], mutation_scale=20, lw=1, arrowstyle="-|>", color="k")
