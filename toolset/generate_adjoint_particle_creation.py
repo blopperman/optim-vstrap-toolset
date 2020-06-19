@@ -1,29 +1,35 @@
+#!/usr/bin/env python3
+
+import argparse
 import xml.etree.ElementTree as ET
 import csv
 import numpy.matlib
 import numpy as np
 import math
 
+parser = argparse.ArgumentParser(prog="Generate File for creation of adjoint particles", description='Needs target folder for creation fle')
+parser.add_argument('target_folder', type=str, help='target folder for creation file (relative path)')
+args = parser.parse_args()
 
 #file = open("creation_adjoint_particles.xml", 'w+');
-file = open("../../Optim_VSTRAP/data/box_shifting/creation_adjoint_particles.xml", 'w+');
+file = open(args.target_folder + "/creation_adjoint_particles.xml", 'w+');
 
 ntimesteps = 50;
-mu_x = -0.35; 
+mu_x = 0.0; 
 mu_y = 0.0;
 mu_z = 0.0;
-s_x = 0.20;
-s_y = 0.30;
-s_z = 0.30;
+s_x = 0.2;
+s_y = 0.2;
+s_z = 0.2;
 
 v_x = 0.0;
 v_y = 0.0;
 v_z = 0.0;
 
 
-v_s_x = 5e+2;
-v_s_y = 5e+2;
-v_s_z = 5e+2;
+v_s_x = 1e+2;
+v_s_y = 1e+2;
+v_s_z = 1e+2;
 
 
 file.write("<parameraters>\n")
