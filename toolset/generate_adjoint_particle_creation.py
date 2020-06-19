@@ -18,18 +18,18 @@ ntimesteps = 50;
 mu_x = 0.0; 
 mu_y = 0.0;
 mu_z = 0.0;
-s_x = 0.2;
-s_y = 0.2;
-s_z = 0.2;
+s_x = 0.15;
+s_y = 0.15;
+s_z = 0.15;
 
 v_x = 0.0;
 v_y = 0.0;
 v_z = 0.0;
 
 
-v_s_x = 1e+2;
-v_s_y = 1e+2;
-v_s_z = 1e+2;
+v_s_x = 3e+2;
+v_s_y = 3e+2;
+v_s_z = 3e+2;
 
 
 file.write("<parameraters>\n")
