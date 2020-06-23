@@ -74,7 +74,7 @@ class Control_field:
 
 		plt.style.use("ggplot")
 
-		fig = plt.figure()
+		fig = plt.figure(figsize=(10,10))
 		ax = fig.add_subplot(111, projection='3d')
 		ax.set(xlim=(-0.5, 0.5), ylim=(0.5, -0.5),zlim=(-0.5,0.5))
 		ax.set_xlabel('x axis')
@@ -92,8 +92,8 @@ class Control_field:
 		plt.draw()
 
 		print("Generating tikz file...")
-		tikzplotlib.save("test_control_field.tex")
-
+		tikzplotlib.save("control_field.tex")
+		plt.savefig("../../Optim_VSTRAP/results/force_field.png")
 		plt.show()
 
 		
